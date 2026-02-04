@@ -34,6 +34,7 @@ function addBookToLibrary(title, author, pages, hasRead) {
 
 function renderBooks() {
     let booksArr = state.library;
+    libraryContainer.innerHTML = ""; // clears out the container
 
     for (let {title, author, pages, hasRead, id} of booksArr) {
         let bookContainerEl = document.createElement("div");
@@ -62,9 +63,49 @@ function renderBooks() {
     }
 }
 
+function renderCreateForm() {
+    libraryContainer.innerHTML = "";
+    let formElement = document.createElement("form");
+    formElement.classList.add("create-form-element")
+
+    let titleLabel = document.createElement("label");
+    titleLabel.textContent = "Title: ";
+    let titleInput = document.createElement("input");
+    titleLabel.appendChild(titleInput);
+
+    let authorLabel = document.createElement("label");
+    authorLabel.textContent = "Author: "
+    let authorInput = document.createElement("input");
+    authorLabel.appendChild(authorInput);
+
+    let pageCountLabel = document.createElement("label");
+    pageCountLabel.textContent = "Page Count: "
+    let pageCountInput = document.createElement("input");
+    pageCountLabel.appendChild(pageCountInput)
+
+    let hasReadLabel = document.createElement("label");
+    hasReadLabel.textContent = "Has read: "
+    let hasReadSelect = document.createElement("select");
+    let yesOption = document.createElement("option");
+    yesOption.textContent = "Yes";
+    let noOption = document.createElement("option");
+    noOption.textContent = "No";
+    hasReadLabel.appendChild(hasReadSelect);
+    
+    hasReadSelect.appendChild(yesOption);
+    hasReadSelect.appendChild(noOption);
+
+    formElement.appendChild(titleLabel);
+    formElement.appendChild(authorLabel);
+    formElement.appendChild(pageCountLabel);
+    formElement.appendChild(hasReadLabel);
+
+    libraryContainer.appendChild(formElement)
+}
+
 addBookToLibrary("Title1", "Taylor", 200, false)
 addBookToLibrary("Title2", "Taylor", 200, false)
 addBookToLibrary("Title3", "Taylor", 200, false)
 addBookToLibrary("Title4", "Taylor", 200, false)
 
-renderBooks()
+renderCreateForm()
