@@ -68,20 +68,9 @@ function renderCreateForm() {
     let formElement = document.createElement("form");
     formElement.classList.add("create-form-element")
 
-    let titleLabel = document.createElement("label");
-    titleLabel.textContent = "Title: ";
-    let titleInput = document.createElement("input");
-    titleLabel.appendChild(titleInput);
-
-    let authorLabel = document.createElement("label");
-    authorLabel.textContent = "Author: "
-    let authorInput = document.createElement("input");
-    authorLabel.appendChild(authorInput);
-
-    let pageCountLabel = document.createElement("label");
-    pageCountLabel.textContent = "Page Count: "
-    let pageCountInput = document.createElement("input");
-    pageCountLabel.appendChild(pageCountInput)
+    let titleElement = getLabelWithInput("Title: ", "text");
+    let authorElement = getLabelWithInput("Author: ", "text");
+    let pageCountElement = getLabelWithInput("Page Count: ", "number");
 
     let hasReadLabel = document.createElement("label");
     hasReadLabel.textContent = "Has read: "
@@ -95,12 +84,21 @@ function renderCreateForm() {
     hasReadSelect.appendChild(yesOption);
     hasReadSelect.appendChild(noOption);
 
-    formElement.appendChild(titleLabel);
-    formElement.appendChild(authorLabel);
-    formElement.appendChild(pageCountLabel);
+    formElement.appendChild(titleElement);
+    formElement.appendChild(authorElement);
+    formElement.appendChild(pageCountElement);
     formElement.appendChild(hasReadLabel);
 
     libraryContainer.appendChild(formElement)
+}
+
+function getLabelWithInput(text, type = "text") {
+    let label = document.createElement("label");
+    let input = document.createElement("input");
+    label.textContent = text;
+    input.type = type;
+    label.appendChild(input);
+    return label;
 }
 
 addBookToLibrary("Title1", "Taylor", 200, false)
