@@ -80,6 +80,10 @@ function renderCreateForm() {
     let noOption = document.createElement("option");
     noOption.textContent = "No";
     hasReadLabel.appendChild(hasReadSelect);
+
+    let addButton = document.createElement("button");
+    addButton.textContent = "SAVE NOTE"
+    addButton.setAttribute("type", "submit");
     
     hasReadSelect.appendChild(yesOption);
     hasReadSelect.appendChild(noOption);
@@ -88,6 +92,7 @@ function renderCreateForm() {
     formElement.appendChild(authorElement);
     formElement.appendChild(pageCountElement);
     formElement.appendChild(hasReadLabel);
+    formElement.appendChild(addButton);
 
     libraryContainer.appendChild(formElement)
 }
@@ -97,6 +102,7 @@ function getLabelWithInput(text, type = "text") {
     let input = document.createElement("input");
     label.textContent = text;
     input.type = type;
+    input.setAttribute("min", 1);
     label.appendChild(input);
     return label;
 }
