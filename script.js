@@ -13,6 +13,7 @@ function render() {
         // function renderEditForm()
     }
     if (state.view === "create") {
+        renderCreateForm()
         // function renderCreateForm()
     }
 }
@@ -113,6 +114,7 @@ function getLabelWithInput(text, type = "text", classEl) {
 }
 
 document.addEventListener("click", (e) => {
+    console.log(e.target.value)
     if (e.target.value === "save-btn") {
         let title = document.querySelector(".title-input").value;
         let author = document.querySelector(".author-input").value;
@@ -122,6 +124,10 @@ document.addEventListener("click", (e) => {
         state.view = "library";
         render()
     }
+    if (e.target.value === "add-button") {
+        state.view = "create";
+        render();
+    }
 })
 
 addBookToLibrary("Title1", "Taylor", 200, false)
@@ -129,4 +135,4 @@ addBookToLibrary("Title2", "Taylor", 200, false)
 addBookToLibrary("Title3", "Taylor", 200, false)
 addBookToLibrary("Title4", "Taylor", 200, false)
 
-renderCreateForm()
+console.log(state.library)
