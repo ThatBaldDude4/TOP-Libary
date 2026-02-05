@@ -5,9 +5,9 @@ const state = {
     library: [], // storage for book objects
 }
 
-function render(state) {
+function render() {
     if (state.view === "library") {
-        // function renderLibrary()
+        renderBooks()
     }
     if (state.view === "edit") {
         // function renderEditForm()
@@ -68,22 +68,26 @@ function renderCreateForm() {
     let formElement = document.createElement("form");
     formElement.classList.add("create-form-element")
 
-    let titleElement = getLabelWithInput("Title: ", "text");
-    let authorElement = getLabelWithInput("Author: ", "text");
-    let pageCountElement = getLabelWithInput("Page Count: ", "number");
+    let titleElement = getLabelWithInput("Title: ", "text", "title-input");
+    let authorElement = getLabelWithInput("Author: ", "text", "author-input");
+    let pageCountElement = getLabelWithInput("Page Count: ", "number", "number-input");
 
     let hasReadLabel = document.createElement("label");
     hasReadLabel.textContent = "Has read: "
     let hasReadSelect = document.createElement("select");
+    hasReadSelect.classList.add("select-element");
     let yesOption = document.createElement("option");
+    yesOption.setAttribute("value", "yes");
     yesOption.textContent = "Yes";
     let noOption = document.createElement("option");
+    noOption.setAttribute("value", "no");
     noOption.textContent = "No";
     hasReadLabel.appendChild(hasReadSelect);
 
     let addButton = document.createElement("button");
     addButton.textContent = "SAVE NOTE"
-    addButton.setAttribute("type", "submit");
+    addButton.setAttribute("type", "button");
+    addButton.setAttribute("value", "save-btn");
     
     hasReadSelect.appendChild(yesOption);
     hasReadSelect.appendChild(noOption);
@@ -97,15 +101,28 @@ function renderCreateForm() {
     libraryContainer.appendChild(formElement)
 }
 
-function getLabelWithInput(text, type = "text") {
+function getLabelWithInput(text, type = "text", classEl) {
     let label = document.createElement("label");
     let input = document.createElement("input");
+    input.classList.add(classEl)
     label.textContent = text;
     input.type = type;
     input.setAttribute("min", 1);
     label.appendChild(input);
     return label;
 }
+
+document.addEventListener("click", (e) => {
+    if (e.target.value === "save-btn") {
+        let title = document.querySelector(".title-input").value;
+        let author = document.querySelector(".author-input").value;
+        let pages = document.querySelector(".number-input").value;
+        let hasRead = document.querySelector(".select-element").value === "yes" ? true : false;
+        addBookToLibrary(title, author, pages, hasRead);
+        state.view = "library";
+        render()
+    }
+})
 
 addBookToLibrary("Title1", "Taylor", 200, false)
 addBookToLibrary("Title2", "Taylor", 200, false)
