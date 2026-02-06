@@ -28,6 +28,9 @@ h1 {
 .book {
     padding: 10px;
     border: 2px solid red;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
 }
 
 .create-form-element {

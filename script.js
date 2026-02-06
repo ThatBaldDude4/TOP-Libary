@@ -47,10 +47,13 @@ function renderBooks() {
         let editBtn = document.createElement("button");
         let deleteBtn = document.createElement("button");
 
+        bookContainerEl.classList.add("book")
         titleEl.textContent = title;
         authorEl.textContent = author;
         pageCountEl.textContent = pages;
         hasReadEl.textContent = hasRead ? "Have read" : "Not Read";
+        hasReadEl.dataset.bookId = id;
+        hasReadEl.classList.add("has-read-element")
         editBtn.textContent = "EDIT";
         deleteBtn.textContent = "DELETE";
         deleteBtn.dataset.bookId = id;
@@ -112,6 +115,15 @@ function deleteBook(e) {
     });
 }
 
+function toggleHasRead(e) {
+    let id = e.target.dataset.bookId;
+    state.library.forEach((book) => {
+        if (book.id === id) {
+            book.hasRead = !book.hasRead;
+        }
+    })
+}
+
 function getLabelWithInput(text, type = "text", classEl) {
     let label = document.createElement("label");
     let input = document.createElement("input");
@@ -124,7 +136,6 @@ function getLabelWithInput(text, type = "text", classEl) {
 }
 
 document.addEventListener("click", (e) => {
-    console.log(e.target.value)
     if (e.target.value === "save-btn") {
         let title = document.querySelector(".title-input").value;
         let author = document.querySelector(".author-input").value;
@@ -142,9 +153,14 @@ document.addEventListener("click", (e) => {
         deleteBook(e);
         render();
     }
+    if (e.target.classList.contains("has-read-element")) {
+        console.log("test")
+        toggleHasRead(e);
+        render()
+    }
 })
 
-addBookToLibrary("Title1", "Taylor", 200, false)
+addBookToLibrary("Title", "Taylor", 200, false)
 addBookToLibrary("Title2", "Taylor", 200, false)
 addBookToLibrary("Title3", "Taylor", 200, false)
 addBookToLibrary("Title4", "Taylor", 200, false)
