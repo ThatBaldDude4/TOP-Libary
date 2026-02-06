@@ -26,6 +26,10 @@ function Book(title, author, pages, hasRead, id) {
     this.id = id;
 }
 
+Book.prototype.toggleRead = function() {
+    this.hasRead = !this.hasRead;
+}
+
 function addBookToLibrary(title, author, pages, hasRead) {
     if (!title || !author || !pages) {return}
     const uniqueId = crypto.randomUUID();
@@ -43,7 +47,7 @@ function renderBooks() {
         let titleEl = document.createElement("h2");
         let authorEl = document.createElement("h3");
         let pageCountEl = document.createElement("div");
-        let hasReadEl = document.createElement("div");
+        let hasReadEl = document.createElement("button");
         let editBtn = document.createElement("button");
         let deleteBtn = document.createElement("button");
 
@@ -119,7 +123,7 @@ function toggleHasRead(e) {
     let id = e.target.dataset.bookId;
     state.library.forEach((book) => {
         if (book.id === id) {
-            book.hasRead = !book.hasRead;
+            book.toggleRead();
         }
     })
 }
