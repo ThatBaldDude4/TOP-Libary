@@ -27,6 +27,7 @@ function Book(title, author, pages, hasRead, id) {
 }
 
 function addBookToLibrary(title, author, pages, hasRead) {
+    if (!title || !author || !pages) {return}
     const uniqueId = crypto.randomUUID();
     const newBook = new Book(title, author, pages, hasRead, uniqueId);
 
@@ -52,6 +53,8 @@ function renderBooks() {
         hasReadEl.textContent = hasRead ? "Have read" : "Not Read";
         editBtn.textContent = "EDIT";
         deleteBtn.textContent = "DELETE";
+        deleteBtn.dataset.bookId = id;
+        deleteBtn.classList.add("delete-btn");
 
         bookContainerEl.appendChild(titleEl);
         bookContainerEl.appendChild(authorEl);
@@ -102,6 +105,13 @@ function renderCreateForm() {
     libraryContainer.appendChild(formElement)
 }
 
+function deleteBook(e) {
+    let id = e.target.dataset.bookId;
+    state.library = state.library.filter((book) => {
+        return book.id !== id;
+    });
+}
+
 function getLabelWithInput(text, type = "text", classEl) {
     let label = document.createElement("label");
     let input = document.createElement("input");
@@ -128,11 +138,14 @@ document.addEventListener("click", (e) => {
         state.view = "create";
         render();
     }
+    if (e.target.classList.contains("delete-btn")) {
+        deleteBook(e);
+        render();
+    }
 })
 
 addBookToLibrary("Title1", "Taylor", 200, false)
 addBookToLibrary("Title2", "Taylor", 200, false)
 addBookToLibrary("Title3", "Taylor", 200, false)
 addBookToLibrary("Title4", "Taylor", 200, false)
-
-console.log(state.library)
+render()
